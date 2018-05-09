@@ -1,4 +1,0 @@
-ERR: Error: Error: Command failed: rmdir /S /Q eth-phishing-detect logs.txt
-The system cannot find the file specified.
-The directory name is invalid.
-
