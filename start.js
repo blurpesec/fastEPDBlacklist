@@ -24,21 +24,11 @@ async.series(
                 });
             },
             function (callback) { // Copy rungit.js to eth-phishing-detect
-                _command('copy "copyfiles/rungit.js" eth-phishing-detect', function (err, response) {
+                _command('xcopy copyfiles eth-phishing-detect', function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------rungit.js copied---------");
-                    callback();
-
-                });
-            },
-            function (callback) { // Copy makenew.js to eth-phishing-detect
-                _command('copy "copyfiles/makenew.js" eth-phishing-detect', function (err, response) {
-                    if (err) {
-                        return console.log("ERR: " + err);
-                    }
-                    console.log("------------makenew.js copied---------");
+                    console.log("------------File xcopy Complete---------");
                     callback();
                 });
             },
@@ -47,7 +37,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------/eth-phishing-detect/Rungit.js executed---------");
+                    console.log("------------/eth-phishing-detect/Rungit.js has begun---------");
                     callback();
                 });
             }
@@ -73,4 +63,3 @@ function _command (command, cb){
         }
     });
 }
-      

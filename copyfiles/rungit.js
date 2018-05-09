@@ -1,5 +1,6 @@
 const async = require('async');
 var exec = require('child_process').exec;
+process.chdir(__dirname);
 
 function _command (command, cb){
     var child = exec(command, function(err, stdout, stderr){
@@ -44,7 +45,7 @@ async.series(
                 });
             },
             function (callback) { // Make additions using `makeNew.js`
-                _command("node makeNew.js", function (err, response) {
+                _command("node ../copyfiles/makeNew.js", function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
@@ -70,7 +71,7 @@ async.series(
                     callback();
                 });
             },
-            function (callback) {
+            function (callback) { // `git push origin` has begun
                 _command("git push origin blacklist_domains", function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
@@ -88,12 +89,30 @@ async.series(
                     callback();
                 });
             },
+            function (callback) { //Navigate to github
+                _command("start /max https://github.com/MetaMask/eth-phishing-detect/", function (err, response) {
+                    if (err) {
+                        return console.log("ERR: " + err);
+                    }
+                    console.log("------------Navigating to github to create PR---------");
+                    callback();
+                });
+            },
             function (callback) {
                 _command("git branch -D blacklist_domains", function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
                     console.log("------------New Branch Deleted---------");
+                    callback();
+                });
+            },
+            function (callback) {
+                _command("node ../cleanup.js", function (err, response) {
+                    if (err) {
+                        return console.log("ERR: " + err);
+                    }
+                    console.log("------------Finalization has begun---------");
                     callback();
                 });
             }
