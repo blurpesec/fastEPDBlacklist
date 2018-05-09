@@ -1,0 +1,3 @@
+ERR: Error: Error: Command failed: git fetch origin
+fatal: Not a git repository (or any of the parent directories): .git
+
