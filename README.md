@@ -7,8 +7,6 @@ Run ```node start``` to begin
 
 Incomplete:
 
-- [] Add batch-add process.
+* Add batch-add process through blacklistjson.push() in makeNew.js
 
-- [] Fix .gitignore files.
-
-- [] Create documentation to explain what happens.
+* Create documentation to explain what project does.
