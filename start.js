@@ -24,7 +24,7 @@ async.series(
                 });
             },
             function (callback) { // Copy rungit.js to eth-phishing-detect
-                _command("copy rungit.js eth-phishing-detect", function (err, response) {
+                _command('copy "copyfiles/rungit.js" eth-phishing-detect', function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
@@ -34,20 +34,11 @@ async.series(
                 });
             },
             function (callback) { // Copy makenew.js to eth-phishing-detect
-                _command("copy makenew.js eth-phishing-detect", function (err, response) {
+                _command('copy "copyfiles/makenew.js" eth-phishing-detect', function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
                     console.log("------------makenew.js copied---------");
-                    callback();
-                });
-            },
-            function (callback) { // Copy gitignore to eth-phishing-detect
-                _command("copy .gitignore eth-phishing-detect", function (err, response) {
-                    if (err) {
-                        return console.log("ERR: " + err);
-                    }
-                    console.log("------------.gitignore copied---------");
                     callback();
                 });
             },
