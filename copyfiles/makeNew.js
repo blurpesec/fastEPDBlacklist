@@ -2,7 +2,7 @@ const json = require ( 'json' );
 const fs = require( 'fs' );
 const filename =  '../newBlacklistItems.txt';
 const writefilename = 'src/config.json'
-var x = require('../src/config.json')
+var x = require('../eth-phishing-detect/src/config.json')
 
 function readInTXT(filename, callback){
   fs.readFile(filename, "utf8", function(e, success) {
@@ -29,8 +29,8 @@ function writeToJSON(filename, data, callback){
                             .split(/[/?#]/)[0];
       json.blacklist.push(datapiece);
     }
-    //console.log(JSON.stringify(json.blacklist));
-    callback(undefined, JSON.stringify(json.blacklist, null, 4));
+    returns = JSON.stringify(json, null, 4);
+    callback(undefined, returns);
 
   })
 }
@@ -47,11 +47,11 @@ readInTXT('../newBlacklistItems.txt', function(e, success){
   if(e){
     console.log(e);
   }
-  writeToJSON('../src/config.json', success, function(e,success){
+  writeToJSON('../eth-phishing-detect/src/config.json', success, function(e,success){
     if(e){
       console.log(e);
     }
-    pushNewData(success, '../src/config.json',  function(e, success){
+    pushNewData(success, '../eth-phishing-detect/src/config.json',  function(e, success){
       if(e){
         console.log(e)
       }

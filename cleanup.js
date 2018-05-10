@@ -17,7 +17,7 @@ function _command (command, cb){
 async.series(
         [
             function (callback) { // remove previous eth-phishing-detect installations
-                _command("rmdir /S /Q eth-phishing-detect " + logfile , function (err, response) {
+                _command("rmdir /S /Q eth-phishing-detect > " + logfile , function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }

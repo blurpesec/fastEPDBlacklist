@@ -16,12 +16,41 @@ function _command (command, cb){
 
 async.series(
         [
-            function (callback) { // `git fetch origin` cmd
-                _command("git fetch origin", function (err, response) {
+
+            function (callback) { // `git remote add upstream` cmd
+                _command("git remote add upstream https://github.com/metamask/eth-phishing-detect.git", function (err, response) {
+                    if (err) {
+                        console.log("ERR: " + err);
+                        callback();
+                    }
+                    console.log("------------Added Upstream remote");
+                    callback();
+                });
+            },
+            function (callback) { // `git fetch upstream` cmd
+                _command("git fetch upstream", function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Fetch Complete---------");
+                    console.log("------------Fetch Upstream Complete");
+                    callback();
+                });
+            },
+            function (callback) { // `git merge upstream/master` cmd
+                _command("git merge upstream/master", function (err, response) {
+                    if (err) {
+                        return console.log("ERR: " + err);
+                    }
+                    console.log("------------Merge Upstream Complete");
+                    callback();
+                });
+            },
+            function (callback) { // `git psuh origin` cmd
+                _command("git push origin", function (err, response) {
+                    if (err) {
+                        return console.log("ERR: " + err);
+                    }
+                    console.log("-----------Upstream Push Complete");
                     callback();
                 });
             },
@@ -30,7 +59,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Branch Reset Complete---------");
+                    console.log("------------Branch Reset Complete");
                     callback();
 
                 });
@@ -40,34 +69,34 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------New blacklist_domains Branch Created---------");
+                    console.log("------------New blacklist_domains Branch Created");
                     callback();
                 });
             },
             function (callback) { // Download current config.json using download.js
-                _command("node ../copyfiles/download.js", function (err, response) {
+                _command("node ../copyfiles/download.js > ../logs/downloadlog.txt", function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Download Completed---------");
+                    console.log("------------Download Completed");
                     callback();
                 });
             },
             function (callback) { // Make additions using `makeNew.js`
-                _command("node ../copyfiles/makeNew.js", function (err, response) {
+                _command("node ../copyfiles/makeNew.js > ../logs/makeNew.txt", function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------New Additions Made---------");
+                    console.log("------------New Additions Made");
                     callback();
                 });
             },
             function (callback) { // `git add *` cmd
-                _command("git add \"*\"", function (err, response) {
+                _command("git add src/config.json", function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Git Add Completed---------");
+                    console.log("------------Git Add Completed");
                     callback();
                 });
             },
@@ -76,7 +105,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Git Commit Completed---------");
+                    console.log("------------Git Commit Completed");
                     callback();
                 });
             },
@@ -85,7 +114,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Git Push Completed---------");
+                    console.log("------------Git Push Completed");
                     callback();
                 });
             },
@@ -94,7 +123,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Change Branch Completed---------");
+                    console.log("------------Change Branch Completed");
                     callback();
                 });
             },
@@ -103,7 +132,16 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Navigating to github to create PR---------");
+                    console.log("------------Navigating to github to create PR");
+                    callback();
+                });
+            },
+            function (callback) {
+                _command("node ../cleanup.js > ../logs/cleanupLogs.txt", function (err, response) {
+                    if (err) {
+                        return console.log("ERR: " + err + "CurrentDir: " + __dirname);
+                    }
+                    console.log("------------Finalization has begun---------");
                     callback();
                 });
             },
@@ -115,23 +153,14 @@ async.series(
                     console.log("------------New Branch Deleted---------");
                     callback();
                 });
-            },
-            function (callback) {
-                _command("node ../cleanup.js", function (err, response) {
-                    if (err) {
-                        return console.log("ERR: " + err);
-                    }
-                    console.log("------------Finalization has begun---------");
-                    callback();
-                });
             }
         ],
         function _allGood(err, results) {
             if (err) {
-                console.log("-------------Error was found-------------")
+                console.log("------------Error was found-------------")
             }
             else {
-                console.log("-------------THANK FUCK IT FINALLY COMPLETED SUCCESSFULLY!-------------")
+                console.log("------------Completed rungit successfully-------------")
             }
         }
     );

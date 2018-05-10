@@ -1,8 +1,9 @@
 const async = require('async');
+const json = require('json');
 var config = require('./configuration.json');
 var exec = require('child_process').exec;
 
-const logfile = 'logs.txt'
+const logfile = './logs/cleanupLog.txt'
 
 // Run commands in asynchronously, in series.
 async.series(
@@ -12,8 +13,8 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Initialization Completed---------");
-                    console.log("------------Cloning using: " + config.cloneURL + "---------");
+                    console.log("------------Initialization Completed");
+                    console.log("------------Cloning using: " + JSON.stringify(config.cloneURL));
                     callback();
                 });
             },
@@ -22,7 +23,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Clone Complete---------");
+                    console.log("------------Clone Complete");
                     callback();
                 });
             },
@@ -31,7 +32,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------File xcopy Complete---------");
+                    console.log("------------File xcopy Complete");
                     callback();
                 });
             },
@@ -40,17 +41,18 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------/eth-phishing-detect/Rungit.js has begun---------");
+                    console.log("------------/eth-phishing-detect/Rungit.js has begun");
                     callback();
                 });
             }
         ],
         function _allGood(err, results) {
             if (err) {
-                console.log("-------------Error was found-------------")
+                console.log("------------Error was found")
             }
             else {
-                console.log("-------------Completed Start Process Successfully-------------")
+                console.log("------------Completed Start Process Successfully")
+                console.log("------------Updating eth-phishing-detect now. Please wait.")
             }
         }
 );

@@ -10,7 +10,10 @@ options = {
       requestCert        : true,
       agent              : false
 };
-var file = fs.createWriteStream("./src/config.json");
+var file = fs.createWriteStream("../eth-phishing-detect/src/config.json", function(err,cb){
+  if(err) console.log("Err: " + err + " > ../logs/downloadlogs.txt")
+  else return(cb)
+});
 var request = https.get(options, function(response){
   response.pipe(file);
   file.on("finish", function(){
