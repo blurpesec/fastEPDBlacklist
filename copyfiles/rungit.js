@@ -40,7 +40,16 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------New Branch Created---------");
+                    console.log("------------New blacklist_domains Branch Created---------");
+                    callback();
+                });
+            },
+            function (callback) { // Download current config.json using download.js
+                _command("node ../copyfiles/download.js", function (err, response) {
+                    if (err) {
+                        return console.log("ERR: " + err);
+                    }
+                    console.log("------------Download Completed---------");
                     callback();
                 });
             },
