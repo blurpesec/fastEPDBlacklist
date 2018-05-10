@@ -1,5 +1,7 @@
 const async = require('async');
+var config = require('./configuration.json');
 var exec = require('child_process').exec;
+
 const logfile = 'logs.txt'
 
 // Run commands in asynchronously, in series.
@@ -11,11 +13,12 @@ async.series(
                         return console.log("ERR: " + err);
                     }
                     console.log("------------Initialization Completed---------");
+                    console.log("------------Cloning using: " + config.cloneURL + "---------");
                     callback();
                 });
             },
             function (callback) { // Clone Github repo
-                _command("git clone https://github.com/hahnmichaelf/eth-phishing-detect.git", function (err, response) {
+                _command("git clone " + config.cloneUrl, function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
@@ -47,7 +50,7 @@ async.series(
                 console.log("-------------Error was found-------------")
             }
             else {
-                console.log("-------------THANK FUCK IT FINALLY COMPLETED SUCCESSFULLY!-------------")
+                console.log("-------------Completed Start Process Successfully-------------")
             }
         }
 );
