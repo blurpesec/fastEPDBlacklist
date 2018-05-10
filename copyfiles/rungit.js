@@ -1,5 +1,6 @@
 const async = require('async');
 var exec = require('child_process').exec;
+var random = Math.floor(Math.random() * (9999 - 1) + 1);
 process.chdir(__dirname);
 
 function _command (command, cb){
@@ -13,10 +14,8 @@ function _command (command, cb){
         }
     });
 }
-
 async.series(
         [
-
             function (callback) { // `git remote add upstream` cmd
                 _command("git remote add upstream https://github.com/metamask/eth-phishing-detect.git", function (err, response) {
                     if (err) {
@@ -50,7 +49,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("-----------Upstream Push Complete");
+                    console.log("------------Upstream Push Complete");
                     callback();
                 });
             },
@@ -65,11 +64,11 @@ async.series(
                 });
             },
             function (callback) { // `git checkout -b blacklist_domains` cmd
-                _command("git checkout -b blacklist_domains", function (err, response) {
+                _command("git checkout -b blacklist_domains_" + random, function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------New blacklist_domains Branch Created");
+                    console.log("------------New blacklist_domains_" + random + " Branch Created");
                     callback();
                 });
             },
@@ -101,7 +100,7 @@ async.series(
                 });
             },
             function (callback) { // `git commit -b blacklist_domains` cmd
-                _command("git commit -m blacklist_domains", function (err, response) {
+                _command("git commit -m blacklist_domains_" + random, function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
@@ -110,20 +109,11 @@ async.series(
                 });
             },
             function (callback) { // `git push origin` has begun
-                _command("git push origin blacklist_domains", function (err, response) {
+                _command("git push origin blacklist_domains_" + random, function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
                     console.log("------------Git Push Completed");
-                    callback();
-                });
-            },
-            function (callback) {
-                _command("git checkout master", function (err, response) {
-                    if (err) {
-                        return console.log("ERR: " + err);
-                    }
-                    console.log("------------Change Branch Completed");
                     callback();
                 });
             },
@@ -132,35 +122,44 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Navigating to github to create PR");
+                    console.log("------------Navigating to github to create the PR");
+                    callback();
+                });
+            },/*
+            function (callback) {
+                _command("git checkout master", function (err, response) {
+                    if (err) {
+                        return console.log("ERR: " + err);
+                    }
+                    console.log("------------Branch changed to master");
                     callback();
                 });
             },
+            function (callback) {
+                _command("git branch -D blacklist_domains_" + random, function (err, response) {
+                    if (err) {
+                        return console.log("ERR: " + err);
+                    }
+                    console.log("------------" + response);
+                    callback();
+                });
+            },*/
             function (callback) {
                 _command("node ../cleanup.js > ../logs/cleanupLogs.txt", function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err + "CurrentDir: " + __dirname);
                     }
-                    console.log("------------Finalization has begun---------");
-                    callback();
-                });
-            },
-            function (callback) {
-                _command("git branch -D blacklist_domains", function (err, response) {
-                    if (err) {
-                        return console.log("ERR: " + err);
-                    }
-                    console.log("------------New Branch Deleted---------");
+                    console.log("------------Finalization has begun");
                     callback();
                 });
             }
         ],
         function _allGood(err, results) {
             if (err) {
-                console.log("------------Error was found-------------")
+                console.log("------------Error was found")
             }
             else {
-                console.log("------------Completed rungit successfully-------------")
+                console.log("------------Completed rungit successfully")
             }
         }
     );

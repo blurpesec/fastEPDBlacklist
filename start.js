@@ -14,7 +14,7 @@ async.series(
                         return console.log("ERR: " + err);
                     }
                     console.log("------------Initialization Completed");
-                    console.log("------------Cloning using: " + JSON.stringify(config.cloneURL));
+                    console.log("------------Cloning using: " + JSON.stringify(config.cloneUrl));
                     callback();
                 });
             },
