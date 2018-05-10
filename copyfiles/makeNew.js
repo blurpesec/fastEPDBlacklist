@@ -29,7 +29,7 @@ function writeToJSON(filename, data, callback){
                             .split(/[/?#]/)[0];
       json.blacklist.push(datapiece);
     }
-    returns = JSON.stringify(json, null, 4);
+    returns = JSON.stringify(json, null, 2);
     callback(undefined, returns);
 
   })
