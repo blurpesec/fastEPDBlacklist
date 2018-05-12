@@ -1,8 +1,9 @@
 const json = require ( 'json' );
 const fs = require( 'fs' );
 const filename =  '../newBlacklistItems.txt';
-const writefilename = 'src/config.json'
-var x = require('../eth-phishing-detect/src/config.json')
+const writefilename = 'src/config.json';
+const checkForPhishing = require('eth-phishing-detect');
+var x = require('../eth-phishing-detect/src/config.json');
 
 function readInTXT(filename, callback){
   fs.readFile(filename, "utf8", function(e, success) {
@@ -27,7 +28,13 @@ function writeToJSON(filename, data, callback){
                             .replace('[.]','.')
                             .replace('www.','')
                             .split(/[/?#]/)[0];
-      json.blacklist.push(datapiece);
+      if(!checkForPhishing(datapiece)){
+        json.blacklist.push(datapiece);
+        console.log(datapiece + " was added to the blacklist.");
+      }
+      else{
+        console.log(datapiece + " was detected already.");
+      }
     }
     returns = JSON.stringify(json, null, 2);
     callback(undefined, returns);

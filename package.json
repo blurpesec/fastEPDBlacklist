@@ -19,8 +19,9 @@
   "dependencies": {
     "async": "^2.6.0",
     "child_process": "^1.0.2",
+    "eth-phishing-detect": "^1.1.13",
+    "follow-redirects": "^1.4.1",
     "fs": "0.0.1-security",
-    "json": "^9.0.6",
-    "follow-redirects": "^1.4.1"
+    "json": "^9.0.6"
   }
 }
