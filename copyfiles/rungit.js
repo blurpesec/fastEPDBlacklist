@@ -22,7 +22,7 @@ async.series(
                         console.log("ERR: " + err);
                         callback();
                     }
-                    console.log("------------Added Upstream remote");
+                    console.log("Added Upstream remote");
                     callback();
                 });
             },
@@ -31,7 +31,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Fetch Upstream Complete");
+                    console.log("Fetch Upstream Complete");
                     callback();
                 });
             },
@@ -40,7 +40,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Merge Upstream Complete");
+                    console.log("Merge Upstream Complete");
                     callback();
                 });
             },
@@ -49,7 +49,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Upstream Push Complete");
+                    console.log("Upstream Push Complete");
                     callback();
                 });
             },
@@ -58,7 +58,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Branch Reset Complete");
+                    console.log("Branch Reset Complete");
                     callback();
 
                 });
@@ -68,25 +68,25 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------New blacklist_domains_" + random + " Branch Created");
+                    console.log("New blacklist_domains_" + random + " Branch Created");
                     callback();
                 });
             },
             function (callback) { // Download current config.json using download.js
-                _command("node ../copyfiles/download.js > ../logs/downloadlog.txt", function (err, response) {
+                _command("node ../js/download.js > ../logs/downloadlog.txt", function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Download Completed");
+                    console.log("Download Completed");
                     callback();
                 });
             },
             function (callback) { // Make additions using `makeNew.js`
-                _command("node ../copyfiles/makeNew.js > ../logs/makeNew.txt", function (err, response) {
+                _command("node ../js/makeNew.js > ../logs/makeNew.txt", function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------New Additions Made");
+                    console.log("New Additions Made");
                     callback();
                 });
             },
@@ -95,7 +95,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Git Add Completed");
+                    console.log("Git Add Completed");
                     callback();
                 });
             },
@@ -104,7 +104,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Git Commit Completed");
+                    console.log("Git Commit Completed");
                     callback();
                 });
             },
@@ -113,7 +113,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Git Push Completed");
+                    console.log("Git Push Completed");
                     callback();
                 });
             },
@@ -122,44 +122,26 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Navigating to github to create the PR");
-                    callback();
-                });
-            },/*
-            function (callback) {
-                _command("git checkout master", function (err, response) {
-                    if (err) {
-                        return console.log("ERR: " + err);
-                    }
-                    console.log("------------Branch changed to master");
+                    console.log("Navigating to github to create the PR");
                     callback();
                 });
             },
             function (callback) {
-                _command("git branch -D blacklist_domains_" + random, function (err, response) {
-                    if (err) {
-                        return console.log("ERR: " + err);
-                    }
-                    console.log("------------" + response);
-                    callback();
-                });
-            },*/
-            function (callback) {
-                _command("node ../cleanup.js > ../logs/cleanupLogs.txt", function (err, response) {
+                _command("node ../js/cleanup.js > ../logs/cleanupLogs.txt", function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err + "CurrentDir: " + __dirname);
                     }
-                    console.log("------------Finalization has begun");
+                    console.log("Finalization has begun");
                     callback();
                 });
             }
         ],
         function _allGood(err, results) {
             if (err) {
-                console.log("------------Error was found")
+                console.log("Error was found")
             }
             else {
-                console.log("------------Completed rungit successfully")
+                console.log("Completed rungit successfully")
             }
         }
     );

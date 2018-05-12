@@ -9,12 +9,12 @@ const logfile = './logs/cleanupLog.txt'
 async.series(
         [
             function (callback) { // Initizalize by removing previous content
-                _command("node cleanup > " + logfile, function (err, response) {
+                _command("node js/cleanup > " + logfile, function (err, response) {
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Initialization Completed");
-                    console.log("------------Cloning using: " + JSON.stringify(config.cloneUrl));
+                    console.log("Initialization Completed");
+                    console.log("Cloning using: " + JSON.stringify(config.cloneUrl));
                     callback();
                 });
             },
@@ -23,7 +23,7 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------Clone Complete");
+                    console.log("Clone Complete");
                     callback();
                 });
             },
@@ -32,7 +32,8 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------File xcopy Complete");
+                    console.log("File xcopy Complete");
+                    console.log("Updating eth-phishing-detect now. Please wait.")
                     callback();
                 });
             },
@@ -41,18 +42,17 @@ async.series(
                     if (err) {
                         return console.log("ERR: " + err);
                     }
-                    console.log("------------/eth-phishing-detect/Rungit.js has begun");
+                    console.log("rungit.js has begun");
                     callback();
                 });
             }
         ],
         function _allGood(err, results) {
             if (err) {
-                console.log("------------Error was found")
+                console.log("Error was found")
             }
             else {
-                console.log("------------Completed Start Process Successfully")
-                console.log("------------Updating eth-phishing-detect now. Please wait.")
+                console.log("Completed Start Process Successfully")
             }
         }
 );

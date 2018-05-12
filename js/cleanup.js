@@ -1,6 +1,6 @@
 const async = require('async');
 var exec = require('child_process').exec;
-const logfile = 'logs.txt'
+const logfile = './logs/logs.txt'
 
 function _command (command, cb){
     var child = exec(command, function(err, stdout, stderr){
@@ -28,10 +28,10 @@ async.series(
         ],
           function _allGood(err, results) {
               if (err) {
-                  console.log("-------------Error was found-------------")
+                  console.log("Error was found")
               }
               else {
-                  console.log("-------------CleanUp Completed-------------")
+                  console.log("CleanUp Completed")
               }
           }
       );
