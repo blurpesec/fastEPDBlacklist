@@ -1,5 +1,11 @@
 
+#NODE
+node_modules/
+
 #LOGS
 logs/
 logs.txt
-node_modules/
+makeNew.txt
+cleanupLogs.txt
+cleanupLog.txt
+newBlacklistItems.txt
